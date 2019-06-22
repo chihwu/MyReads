@@ -4,16 +4,7 @@ import { Link } from 'react-router-dom'
 
 class DivBookShelves extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			current_reading: [],
-			want_to_read: [],
-			read: []
-		};
-	}
-
-	componentDidMount() {
+	render() {
 		let current_reading = [];
 		let want_to_read = [];
 		let read = [];
@@ -28,15 +19,6 @@ class DivBookShelves extends Component {
 			}
 		});
 
-		this.setState({
-			current_reading: current_reading,
-			want_to_read: want_to_read,
-			read: read
-		});
-	}
-
-	render() {
-
 		return (
 			<div className="list-books">
 	            <div className="list-books-title">
@@ -44,9 +26,9 @@ class DivBookShelves extends Component {
 	            </div>
 	            <div className="list-books-content">
 	              <div>
-	                <DivBookShelf title='Currently Reading' books={ this.state.current_reading } />
-	                <DivBookShelf title='Want to Read' books={ this.state.want_to_read } />
-	                <DivBookShelf title='Read' books={ this.state.read } />
+	                <DivBookShelf title='Currently Reading' books={ current_reading } changeShelf={ this.props.changeShelf } />
+	                <DivBookShelf title='Want to Read' books={ want_to_read } changeShelf={ this.props.changeShelf } />
+	                <DivBookShelf title='Read' books={ read } changeShelf={ this.props.changeShelf } />
 	              </div>
 	            </div>
 	            <div className="open-search">

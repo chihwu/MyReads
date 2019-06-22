@@ -25,27 +25,34 @@ class BooksApp extends Component {
     });
   }
 
-  changeShelf(book, shelf) {
-
-    BooksAPI.update(book, shelf)
+  changeShelf(target_book, shelf) {
+    BooksAPI.update(target_book, shelf)
             .then((res) => {
 
-              this.setState({
-                books: res
-              });
+              this.setState(this.state.books.map((book) => {
+                    if (book.id === target_book.id) {
+                      book.shelf = shelf 
+                    } 
 
+                    return book;
+                    
+                  }));
             });
   }
 
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <DivBookShelves books={ this.state.books } changeShelf={ this.changeShelf } />
+        <Route exact path="/" render={({ history }) => (
+          <DivBookShelves books={ this.state.books } changeShelf={(book, shelf) => { 
+                                                                            this.changeShelf(book, shelf); 
+                                                                          }} />
         )} />
 
-        <Route path="/search" render={() => (
-          <InputSearch books={ this.state.books } changeShelf={ this.changeShelf } />
+        <Route path="/search" render={({ history }) => (
+          <InputSearch books={ this.state.books } changeShelf={(book, shelf) => { 
+                                                                            this.changeShelf(book, shelf); 
+                                                                          }} />
         )} />
       </div>
     )
