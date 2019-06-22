@@ -1,25 +1,30 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import DivBook from './DivBook'
+import * as BooksAPI from './BooksAPI'
 
 class InputSearch extends Component {
 	state = {
 		query: '',
-		books: []
+		books: [],
+		search_books: []
 	};
-
+	
 	filterResult(val) {
-		this.setState({
-			query: val
-		});				
+		// no number or empty string for query string
+		if (!val.match('/^[0-9]+$/') && val.trim() !== '') {
+			BooksAPI.search(val)
+				.then((searched_results) => {
+					this.setState({
+						query: val,
+						searched_books: searched_results
+					});		
+				});
+		}			
 	}
 
 	render() {
-		let filtered_books = this.props.books.filter((book) => (
-								book.title.toLowerCase().includes(this.state.query.toLowerCase())
-							));
-
-		let books = this.state.query === ''? [] : filtered_books;
+		let searched_books = this.state.query === ''? [] : this.state.searched_books;
 
 		return (
 			<div className="search-books">
@@ -41,9 +46,9 @@ class InputSearch extends Component {
 	            <div className="search-books-results">
 	              <ol className="books-grid">
 	              	{
-	              		books.map((book) => (
-	              			<DivBook key={ book.id } book={ book } changeShelf={ this.props.changeShelf } />
-	              		))
+	              		(searched_books.length > 0) && (searched_books.map((searched_book) => (
+	              			<DivBook key={ searched_book.id } book={ searched_book } currBooks={ this.props.books } changeShelf={ this.props.changeShelf } />
+	              		)))
 	              	}
 	              </ol>
 	            </div>
