@@ -19,11 +19,11 @@ class DivBookShelves extends Component {
 		let read = [];
 
 		this.props.books.forEach((book) => {
-			if (book.shelf === 'Currently Reading') {
+			if (book.shelf === 'currentlyReading') {
 				current_reading.push(book);
-			} else if (book.shelf === 'Want to Read') {
+			} else if (book.shelf === 'wantToRead') {
 				want_to_read.push(book);
-			} else if (book.shelf === 'Read') {
+			} else if (book.shelf === 'read') {
 				read.push(book);
 			}
 		});
@@ -36,7 +36,6 @@ class DivBookShelves extends Component {
 	}
 
 	render() {
-		
 
 		return (
 			<div className="list-books">
