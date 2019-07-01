@@ -15,7 +15,7 @@ class DivBook extends Component {
 			});
 		} 
 
-		let book_shelf = target.length === 0 ? book.shelf : target[0].shelf;
+		let book_shelf = target.length === 0 ? 'none' : target[0].shelf;
 
 		return book.imageLinks !== undefined && (
 			<div className="book">
