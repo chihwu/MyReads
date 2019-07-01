@@ -20,7 +20,12 @@ class InputSearch extends Component {
 						searched_books: searched_results
 					});		
 				});
-		}			
+		} else if (val.trim() === '') {
+			this.setState({
+				query: '',
+				searched_books: []
+			});		
+		}
 	}
 
 	render() {
